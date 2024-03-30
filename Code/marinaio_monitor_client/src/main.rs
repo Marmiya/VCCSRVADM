@@ -1,4 +1,4 @@
-use std::io::{Read, Write};
+use std::io::Write;
 use std::net::TcpStream;
 
 // GPU monitoring
@@ -85,6 +85,7 @@ pub fn gather_metrics() -> Result<serde_json::Value, String> {
 
     // Get GPU information
     let nvml = NVML::init().unwrap();
+    let gpu_number = nvml.device_count().unwrap();
     let gpu_info = match dump_all_gpu_info(&nvml) {
         Ok(info) => info,
         Err(e) => return Err(format!("Failed to read GPU info: {}", e)),
@@ -101,6 +102,7 @@ pub fn gather_metrics() -> Result<serde_json::Value, String> {
             "total": disk_total
         },
         "gpu": gpu_info,
+        "gpu_number": gpu_number,
         "cpu_usage": cpu_usage,
     });
 
