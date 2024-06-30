@@ -1,4 +1,4 @@
-package util
+package main
 
 import (
 	"encoding/json"
@@ -38,11 +38,6 @@ func ReadConfig(filename string) (*jwt.Config, error) {
 		Scopes: []string{
 			"https://www.googleapis.com/auth/spreadsheets.readonly",
 		},
-	}
-
-
-	if err != nil {
-		return nil, fmt.Errorf("error unmarshalling JSON: %v", err)
 	}
 
 	return &config, nil
